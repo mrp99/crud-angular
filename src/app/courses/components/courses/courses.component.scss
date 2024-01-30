@@ -1,0 +1,18 @@
+.container {
+  background-color: #9c9a9a;
+  margin: 20px;
+
+}
+
+mat-toolbar {
+  display: flex;
+  align-items: center; // Centraliza verticalmente
+  justify-content: center; // Centraliza horizontalmente
+
+  //sublinhado
+  span {
+    font-size: 1.5em;
+    color: white;
+    border-bottom: 2px solid white;
+  }
+}
