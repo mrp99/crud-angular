@@ -13,14 +13,15 @@ export class CoursesService {
   constructor(private http: HttpClient) { }
 
   public listCourses(): Observable<Course[]> {
-    return this.http.get<Course[]>(this.API).pipe(
-      take(1),
-      map(item => {
-        console.log("mapItem =>", item);
-        return item;
-      }),
-      catchError(error => this.handleErrorService(error))
-    );
+    return this.http.get<Course[]>(this.API)
+      .pipe(
+        take(1),
+        map(item => {
+          console.log("item =>", item);
+          return item;
+        }),
+        catchError(error => this.handleErrorService(error))
+      );
   }
 
   private handleErrorService(error: any): Observable<never> {
