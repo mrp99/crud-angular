@@ -1,7 +1,10 @@
 .container {
   background-color: #9c9a9a;
   margin: 20px;
+}
 
+table {
+  width: 100%;
 }
 
 mat-toolbar {
@@ -15,4 +18,24 @@ mat-toolbar {
     color: white;
     border-bottom: 2px solid white;
   }
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 25px;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.loading-spinner p {
+  margin: 0 5px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  text-align: center;
+  width: 100%;
 }

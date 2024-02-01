@@ -5,11 +5,13 @@ import { AppMaterialModule } from '../shared/app-material/app-material.module';
 import { CoursesRoutingModule } from '../courses-routing/courses-routing.module';
 import { SharedModule } from '../shared/shared-module/shared.module';
 import { CoursesComponent } from '../components/courses/courses.component';
+import { CourseFormComponent } from '../components/course-form/course-form.component';
 
 
 @NgModule({
   declarations: [
-    CoursesComponent
+    CoursesComponent,
+    CourseFormComponent
   ],
   imports: [
     CommonModule,

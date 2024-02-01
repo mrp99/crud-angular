@@ -1,1 +1,7 @@
-<p>error-dialog works!</p>
+<main>
+  <h1 mat-dialog-title [class.title-error]="true">Erro!!</h1>
+  <div mat-dialog-content [class.error-message]="showBlinkingText">{{data}}</div>
+  <div mat-dialog-actions class="centered-button-container">
+    <button mmat-stroked mat-dialog-close class="centered-button">Close</button>
+  </div>
+</main>

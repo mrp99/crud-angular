@@ -1,0 +1,44 @@
+@keyframes blink {
+  0% {
+    color: red;
+  }
+
+  50% {
+    color: transparent;
+  }
+
+  100% {
+    color: red;
+  }
+}
+
+.error-message {
+  animation: blink 1s infinite;
+}
+
+.title-error {
+  color: darkred;
+  text-align: center;
+  text-decoration: underline;
+}
+
+
+.centered-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.centered-button {
+  background-color: #ccc;
+  /* Substitua pela sua cor primária desejada */
+  color: black;
+  transition: background-color 0.3s ease;
+
+}
+
+.centered-button:hover {
+  background-color: orange;
+  /* Adiciona um escurecimento ao passar o mouse */
+}
