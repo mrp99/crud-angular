@@ -32,6 +32,26 @@ export class CoursesService {
       observer.complete();
     });
   }
+
+  private handleErrorSaveService(saveError: any): Observable<never> {
+    console.error("Ocorreu um erro ao Salvar", saveError);
+    return new Observable<never>(save => {
+      save.error("Erro ao tentar salvar, tente mais tarde!");
+      save.complete();
+    })
+  }
+
+  public save(data: Course) {
+    return this.http.post<Course>(this.API, data).pipe(take(1))
+      .pipe(
+        take(1),
+        map(item => {
+          console.log("item salvo =>", item);
+          return item;
+        }),
+        catchError(error => this.handleErrorSaveService(error))
+      );
+  }
 }
 
 // Linha 19 - Efeito colateral (pode ser considerado como substituto do tap)

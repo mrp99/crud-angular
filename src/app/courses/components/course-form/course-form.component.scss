@@ -1,0 +1,96 @@
+@keyframes blink-animation {
+
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+    text-decoration: underline;
+    /* Adiciona sublinhado nos intervalos de 0% a 50% e de 50% a 100% */
+  }
+
+  25%,
+  75% {
+    opacity: 0;
+    text-decoration: none;
+    /* Remove sublinhado nos intervalos de 25% a 75% */
+  }
+}
+
+.background {
+  background-color: #868484;
+  /* Cor de fundo cinza escuro */
+  color: black;
+  /* Cor do texto branco */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+.blink {
+  animation: blink-animation 1s infinite;
+}
+
+
+.btn-center {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-center button {
+  margin: 0 5px;
+  /* Adiciona espaço de 5px entre os botões */
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 5px;
+  /* Adiciona margem inferior de 5px */
+}
+
+.min-width {
+  width: 100%;
+  min-width: 150px;
+}
+
+
+
+.cancel {
+  background-color: #c0b5b5;
+  color: white;
+}
+
+.cancel:hover,
+.cancel:focus {
+  background-color: #616161;
+}
+
+
+mat-card {
+  max-width: 80%;
+  margin: 2em auto;
+  text-align: center;
+}
+
+.mat-toolbar {
+  display: flex;
+  justify-content: center;
+  /* Centraliza o conteúdo horizontalmente */
+  align-items: center;
+  /* Centraliza o conteúdo verticalmente */
+  margin-bottom: 20px;
+}
+
+.mat-card-actions {
+  margin-top: -5px;
+  /* Adiciona margem superior negativa de 5px */
+}
+
+.save {
+  background-color: #54c758;
+  color: white;
+}
+
+.save:hover,
+.save:focus {
+  background-color: #337a36;
+  color: white;
+}
