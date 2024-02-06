@@ -3,9 +3,6 @@
   margin: 20px;
 }
 
-table {
-  width: 100%;
-}
 
 mat-toolbar {
   display: flex;
@@ -19,6 +16,8 @@ mat-toolbar {
     border-bottom: 2px solid white;
   }
 }
+
+
 
 .loading-spinner {
   display: flex;

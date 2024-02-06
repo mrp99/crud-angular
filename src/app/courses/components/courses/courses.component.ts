@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Course } from '../../shared/interface/course';
 import { CoursesService } from '../../shared/services/courses.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { catchError, map, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
+import { catchError, map, of } from 'rxjs';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
+import { Course } from '../../shared/interface/course';
 import { ActivatedRoute, Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-courses',
@@ -16,8 +14,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class CoursesComponent implements OnInit {
 
   courses: Course[] = [];
-  displayedColumns: string[] = ['name', 'category', 'actions'];
-  coursesDataSource!: MatTableDataSource<Course>;
+  loadingSpinner: boolean = true;
+  dadosCarregados: boolean = false;
 
   constructor(
     private service: CoursesService,
@@ -27,18 +25,22 @@ export class CoursesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.initialize();
+    this.iniciarCarregamentoDados();
+    this.getCourses()
   }
 
-  public initialize(): void {
-    this.getCourses();
+  public iniciarCarregamentoDados(): void {
+    this.loadingSpinner = true;
+    setTimeout(() => {
+      this.dadosCarregados = true;
+      this.loadingSpinner = false;
+    }, 1000);
   }
 
   private getCourses(): void {
     this.service.listCourses().pipe(
       map((response) => {
         this.courses = response;
-        this.coursesDataSource = new MatTableDataSource<Course>(this.courses);
       }),
       catchError((error) => {
         this.onError('ERROR AO CARREGAR OS DADOS!')
@@ -56,4 +58,11 @@ export class CoursesComponent implements OnInit {
   public onAdd() {
     this.router.navigate(['new'], { relativeTo: this.route });
   }
+
+
+
 }
+
+
+
+

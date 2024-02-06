@@ -1,0 +1,26 @@
+.mat-table {
+  overflow: auto;
+  max-height: 800px;
+
+}
+
+.action-column {
+  display: flex;
+  justify-content: flex-end; // Isso alinhará os botões no final (canto direito) da célula
+  align-items: center; // Isso alinhará os botões verticalmente no centro da célula
+}
+
+.text-right {
+  text-align: right;
+}
+
+
+.mat-header-cell.text-right,
+.mat-cell.text-right {
+  text-align: right;
+}
+
+.mat-category {
+  display: flex;
+  justify-content: center;
+}

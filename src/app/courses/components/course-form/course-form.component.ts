@@ -27,7 +27,6 @@ export class CourseFormComponent implements OnInit {
 
   public inicializeMethods(): void {
     this.formGroup();
-
   }
 
   public onCancel(): void {
