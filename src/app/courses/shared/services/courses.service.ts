@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Course } from '../interface/course';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, delay, map, take, tap } from 'rxjs';
+import { Observable, catchError, delay, map, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +52,11 @@ export class CoursesService {
         catchError(error => this.handleErrorSaveService(error))
       );
   }
+
+  public loadById(id: string) {
+    return this.http.get<Course>(`${this.API}/${id}`);
+  }
+
 }
 
 // Linha 19 - Efeito colateral (pode ser considerado como substituto do tap)

@@ -14,7 +14,8 @@
       </div>
     </ng-container>
 
-    <app-courses-lit *ngIf="iniciarCarregamentoDados" (addEvent)="onAdd()" [courses]="courses">
+    <app-courses-lit *ngIf="iniciarCarregamentoDados" (addEvent)="onAdd()" (editEvent)="onEdit($event)"
+      [courses]="courses">
     </app-courses-lit>
 
   </div>

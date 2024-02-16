@@ -11,6 +11,7 @@ export class CoursesLitComponent implements OnInit {
 
   @Input() courses: Course[] = [];
   @Output() addEvent = new EventEmitter<void>();
+  @Output() editEvent = new EventEmitter<Course>();
 
   displayedColumns: string[] = ['name', 'category', 'actions'];
 
@@ -23,6 +24,10 @@ export class CoursesLitComponent implements OnInit {
 
   public onAdd(): void {
     this.addEvent.emit();
+  }
+
+  public onEdit(course: Course) {
+    this.editEvent.emit(course)
   }
 
 }
