@@ -3,15 +3,17 @@ import { Course } from '../../shared/interface/course';
 
 
 @Component({
-  selector: 'app-courses-lit',
-  templateUrl: './courses-lit.component.html',
-  styleUrls: ['./courses-lit.component.scss']
+  selector: 'app-courses-list',
+  templateUrl: './courses-list.component.html',
+  styleUrls: ['./courses-list.component.scss']
 })
-export class CoursesLitComponent implements OnInit {
+export class CoursesListComponent implements OnInit {
 
   @Input() courses: Course[] = [];
   @Output() addEvent = new EventEmitter<void>();
   @Output() editEvent = new EventEmitter<Course>();
+  @Output() remove = new EventEmitter<Course>();
+
 
   displayedColumns: string[] = ['name', 'category', 'actions'];
 
@@ -26,8 +28,13 @@ export class CoursesLitComponent implements OnInit {
     this.addEvent.emit();
   }
 
-  public onEdit(course: Course) {
-    this.editEvent.emit(course)
+  public onEdit(courseEdit: Course): void {
+    this.editEvent.emit(courseEdit);
+  }
+
+  public onRemove(courseRemove: Course): void {
+    console.log("chamda do evento ==", courseRemove);
+    this.remove.emit(courseRemove);
   }
 
 }

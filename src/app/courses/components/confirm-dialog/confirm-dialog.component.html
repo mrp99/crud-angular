@@ -1,0 +1,9 @@
+<main class="main">
+  <div mat-dialog-content class="custom-dialog-content">
+    <p><strong>{{ data }}</strong></p>
+  </div>
+  <div mat-dialog-actions class="mat-dialog-actions-center custom-dialog-actions">
+    <button mat-raised-button (click)="onConfirm(true)" color="primary">Sim</button>
+    <button mat-raised-button (click)="onConfirm(false)" color="warn">Não</button>
+  </div>
+</main>

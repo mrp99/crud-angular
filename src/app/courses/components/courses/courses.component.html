@@ -14,9 +14,9 @@
       </div>
     </ng-container>
 
-    <app-courses-lit *ngIf="iniciarCarregamentoDados" (addEvent)="onAdd()" (editEvent)="onEdit($event)"
+    <app-courses-list *ngIf="loading" (addEvent)="onAdd()" (editEvent)="onEdit($event)" (remove)="onRemove($event)"
       [courses]="courses">
-    </app-courses-lit>
+    </app-courses-list>
 
   </div>
 </mat-card>

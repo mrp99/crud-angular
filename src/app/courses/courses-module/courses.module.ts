@@ -7,7 +7,8 @@ import { SharedModule } from '../shared/shared-module/shared.module';
 import { CoursesComponent } from '../components/courses/courses.component';
 import { CourseFormComponent } from '../components/course-form/course-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CoursesLitComponent } from '../components/courses-lit/courses-lit.component';
+import { CoursesListComponent } from '../components/courses-list/courses-list.component';
+
 
 
 
@@ -15,7 +16,7 @@ import { CoursesLitComponent } from '../components/courses-lit/courses-lit.compo
   declarations: [
     CoursesComponent,
     CourseFormComponent,
-    CoursesLitComponent
+    CoursesListComponent
   ],
   imports: [
     AppMaterialModule,
