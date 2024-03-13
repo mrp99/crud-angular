@@ -70,7 +70,11 @@ export class CourseFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       _id: new FormControl(''),
       name: new FormControl('', {
-        validators: [Validators.required]
+        validators: [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(20)
+        ]
       }),
       category: new FormControl('', {
         validators: [Validators.required]
@@ -97,6 +101,27 @@ export class CourseFormComponent implements OnInit {
   public compareWithCategories(course1: Course, course2: Course): boolean {
     return course1 && course2 ? (course1.category === course2.category) : false;
   }
+
+  public getErrorMessage(fieldName: string): string {
+    const field = this.form.get(fieldName);
+    const minLength = field?.errors?.['minlength']?.requiredLength || 4;
+    const maxLength = field?.errors?.['maxlength']?.requiredLength || 20;
+
+    if (field?.hasError('required')) {
+      return 'Campo obrigatório!';
+    }
+
+    if (field?.hasError('minlength')) {
+      return `Tamanho mínimo precisa ser de ${minLength} caracteres!`;
+    }
+
+    if (field?.hasError('maxlength')) {
+      return `Tamanho máximo excedido de ${maxLength} caracteres!`;
+    }
+
+    return 'Campo Inválido';
+  }
+
 
 
 }

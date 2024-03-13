@@ -17,9 +17,9 @@
 }
 
 .background {
-  background-color: #868484;
+  background-color: #535151;
   /* Cor de fundo cinza escuro */
-  color: black;
+  color: #000;
   /* Cor do texto branco */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -55,7 +55,7 @@
 
 .cancel {
   background-color: #c0b5b5;
-  color: white;
+  color: #fff;
 }
 
 .cancel:hover,
@@ -86,11 +86,15 @@ mat-card {
 
 .save {
   background-color: #54c758;
-  color: white;
+  color: #fff;
 }
 
 .save:hover,
 .save:focus {
   background-color: #337a36;
-  color: white;
+  color: #fff;
+}
+
+.hintStyle {
+  color: #fff;
 }
