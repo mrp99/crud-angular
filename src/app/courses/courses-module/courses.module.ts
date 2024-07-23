@@ -11,12 +11,11 @@ import { CoursesListComponent } from '../components/courses-list/courses-list.co
 
 
 
-
 @NgModule({
   declarations: [
     CoursesComponent,
     CourseFormComponent,
-    CoursesListComponent
+    CoursesListComponent,
   ],
   imports: [
     AppMaterialModule,

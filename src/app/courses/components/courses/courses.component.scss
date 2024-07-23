@@ -1,22 +1,20 @@
 .container {
-  background-color: #9c9a9a;
   margin: 20px;
 }
 
-
-mat-toolbar {
+.toolbarSpan {
   display: flex;
-  align-items: center; // Centraliza verticalmente
-  justify-content: center; // Centraliza horizontalmente
-
-  //sublinhado
-  span {
-    font-size: 1.5em;
-    color: white;
-    border-bottom: 2px solid white;
-  }
+  justify-content: center;
+  /* Centraliza horizontalmente */
+  align-items: center;
+  /* Centraliza verticalmente */
 }
 
+.title {
+  font-size: 1.5em;
+  color: white;
+  border-bottom: 2px solid white;
+}
 
 
 .loading-spinner {
@@ -36,5 +34,26 @@ mat-toolbar {
   transform: translate(-50%, -50%);
   color: black;
   text-align: center;
+  width: 100%;
+}
+
+td {
+  padding-right: 8px;
+}
+
+.mat-toolbar.toolbarLesson {
+  background-color: white;
+  color: #333;
+}
+
+.lesson-fields {
+  width: 100%;
+}
+
+td {
+  padding-right: 2px;
+}
+
+.full-width {
   width: 100%;
 }

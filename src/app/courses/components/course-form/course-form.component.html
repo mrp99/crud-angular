@@ -9,7 +9,7 @@
     <form [formGroup]="form" class="min-width">
       <mat-form-field class="full-width">
         <input matInput formControlName="name" placeholder="Nome do Curso:" #name>
-        <mat-hint align="end" class="hintStyle">{{name.value.length || 0}}/20</mat-hint>
+        <mat-hint class="hintStyle">{{name?.value?.length || 0}}/20</mat-hint>
         <mat-error *ngIf="form.get('name')?.invalid">{{getErrorMessage("name")}}</mat-error>
       </mat-form-field>
 
@@ -23,8 +23,24 @@
         </mat-select>
         <mat-error *ngIf="form.get('category')?.invalid">{{getErrorMessage("category")}}</mat-error>
       </mat-form-field>
+
+      <div formArrayName="lessons">
+        <div *ngFor="let lesson of lessons.controls; let i = index" [formGroupName]="i">
+          <mat-form-field class="full-width">
+            <input matInput formControlName="name" placeholder="Nome da Lição">
+            <!-- <mat-error *ngIf="getLessonErrorMessage(i, 'name')">Nome é obrigatório</mat-error> -->
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <input matInput formControlName="url" placeholder="URL da Lição">
+            <!-- <mat-error *ngIf="getLessonErrorMessage(i, 'url')">URL é obrigatória</mat-error> -->
+          </mat-form-field>
+          <button mat-button type="button" (click)="removeLesson(i)">Remover Lição</button>
+        </div>
+      </div>
     </form>
   </mat-card-content>
+
+
 
   <mat-card-actions class="btn-center">
     <button mat-raised-button (click)="onSubmit()" class="save">Salvar</button>

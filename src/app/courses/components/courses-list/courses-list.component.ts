@@ -17,12 +17,9 @@ export class CoursesListComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'category', 'actions'];
 
-  constructor(
+  constructor() { }
 
-  ) { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   public onAdd(): void {
     this.addEvent.emit();

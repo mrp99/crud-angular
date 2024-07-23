@@ -18,6 +18,7 @@ export class CoursesComponent implements OnInit {
   courses: Course[] = [];
   loadingSpinner: boolean = true;
   dadosCarregados: boolean = false;
+  showLessonsTable: boolean = false;
 
   constructor(
     private service: CoursesService,
@@ -119,8 +120,10 @@ export class CoursesComponent implements OnInit {
       }
     });
 
+  }
 
-
+  public toggleLessonTable() {
+    this.showLessonsTable = !this.showLessonsTable;
   }
 
 
