@@ -43,14 +43,12 @@
 .full-width {
   width: 100%;
   margin-bottom: 5px;
-  /* Adiciona margem inferior de 5px */
 }
 
 .min-width {
   width: 100%;
   min-width: 150px;
 }
-
 
 
 .cancel {
@@ -60,7 +58,7 @@
 
 .cancel:hover,
 .cancel:focus {
-  background-color: #616161;
+  background-color: #FFA500;
 }
 
 
@@ -73,15 +71,12 @@ mat-card {
 .mat-toolbar {
   display: flex;
   justify-content: center;
-  /* Centraliza o conteúdo horizontalmente */
   align-items: center;
-  /* Centraliza o conteúdo verticalmente */
   margin-bottom: 20px;
 }
 
 .mat-card-actions {
   margin-top: -5px;
-  /* Adiciona margem superior negativa de 5px */
 }
 
 .save {
@@ -97,4 +92,35 @@ mat-card {
 
 .hintStyle {
   color: #fff;
+}
+
+mat-hint {
+  color: #fff;
+}
+
+
+
+.mat-hint {
+  margin-top: -5px;
+}
+
+
+td {
+  padding-right: 8px;
+}
+
+.lesson-fields {
+  width: 100%;
+}
+
+.full-width-lesson {
+  width: 100%;
+}
+
+.btn-remove {
+  margin-top: -20px;
+}
+
+.prefix {
+  padding-right: 10px;
 }

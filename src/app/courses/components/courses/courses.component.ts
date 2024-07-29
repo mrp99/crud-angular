@@ -18,7 +18,7 @@ export class CoursesComponent implements OnInit {
   courses: Course[] = [];
   loadingSpinner: boolean = true;
   dadosCarregados: boolean = false;
-  showLessonsTable: boolean = false;
+
 
   constructor(
     private service: CoursesService,
@@ -109,7 +109,7 @@ export class CoursesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: Boolean) => {
       if (result) {
-        this.service.removeCourse(course._id).subscribe(
+        this.service.removeCourse(course?._id).subscribe(
           {
             next: () => {
               this.refresh();
@@ -122,9 +122,9 @@ export class CoursesComponent implements OnInit {
 
   }
 
-  public toggleLessonTable() {
-    this.showLessonsTable = !this.showLessonsTable;
-  }
+
+
+
 
 
 }

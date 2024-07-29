@@ -30,7 +30,6 @@ export class CoursesListComponent implements OnInit {
   }
 
   public onRemove(courseRemove: Course): void {
-    console.log("chamda do evento ==", courseRemove);
     this.remove.emit(courseRemove);
   }
 

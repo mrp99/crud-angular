@@ -2,6 +2,8 @@
   margin: 20px;
 }
 
+
+
 .toolbarSpan {
   display: flex;
   justify-content: center;
@@ -34,26 +36,5 @@
   transform: translate(-50%, -50%);
   color: black;
   text-align: center;
-  width: 100%;
-}
-
-td {
-  padding-right: 8px;
-}
-
-.mat-toolbar.toolbarLesson {
-  background-color: white;
-  color: #333;
-}
-
-.lesson-fields {
-  width: 100%;
-}
-
-td {
-  padding-right: 2px;
-}
-
-.full-width {
   width: 100%;
 }

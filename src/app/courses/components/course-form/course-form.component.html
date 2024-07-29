@@ -1,7 +1,7 @@
 <mat-card class="background">
   <mat-card-header>
     <mat-toolbar color="primary">
-      <p class="blink">Detalhes do Curso:</p>
+      <p class="blink">detalhe do Curso:</p>
     </mat-toolbar>
   </mat-card-header>
 
@@ -24,23 +24,39 @@
         <mat-error *ngIf="form.get('category')?.invalid">{{getErrorMessage("category")}}</mat-error>
       </mat-form-field>
 
-      <div formArrayName="lessons">
-        <div *ngFor="let lesson of lessons.controls; let i = index" [formGroupName]="i">
-          <mat-form-field class="full-width">
-            <input matInput formControlName="name" placeholder="Nome da Lição">
-            <!-- <mat-error *ngIf="getLessonErrorMessage(i, 'name')">Nome é obrigatório</mat-error> -->
-          </mat-form-field>
-          <mat-form-field class="full-width">
-            <input matInput formControlName="url" placeholder="URL da Lição">
-            <!-- <mat-error *ngIf="getLessonErrorMessage(i, 'url')">URL é obrigatória</mat-error> -->
-          </mat-form-field>
-          <button mat-button type="button" (click)="removeLesson(i)">Remover Lição</button>
-        </div>
-      </div>
+      <mat-toolbar class="toolbarLesson">
+        <button color="accent" class="btn" mat-raised-button (click)="addNewLesson()">
+          Aulas
+        </button>
+
+      </mat-toolbar>
+      <table class="lesson-fields" formArrayName="lessons">
+        <tr *ngFor="let lesson of getLessonsFormArray(); let i = index" [formGroupName]="i">
+          <td>
+            <mat-form-field class="full-width-lesson">
+              <mat-label>Título da Aula:</mat-label>
+              <input matInput formControlName="name" #chars maxlength="30" aria-label="none">
+              <mat-hint align="start">Descrição aula:</mat-hint>
+              <mat-hint align="end">{{chars.value.length}} / 30</mat-hint>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field class="full-width-lesson">
+              <mat-label>URL:</mat-label>
+              <span matPrefix class="prefix">{{prefix}}</span>
+              <input matInput formControlName="url" aria-label="none" />
+              <mat-hint align="start">URL aula:</mat-hint>
+            </mat-form-field>
+          </td>
+          <td>
+            <button mat-icon-button color="accent" aria-label="none" (click)="removeLesson(i)" class="btn-remove">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </table>
     </form>
   </mat-card-content>
-
-
 
   <mat-card-actions class="btn-center">
     <button mat-raised-button (click)="onSubmit()" class="save">Salvar</button>

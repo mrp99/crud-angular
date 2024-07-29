@@ -17,30 +17,5 @@
       [courses]="courses">
     </app-courses-list>
 
-    <mat-toolbar class="toolbarLesson">
-
-      <button color="accent" (click)="toggleLessonTable()">
-        Aulas
-      </button>
-
-      <table class="lesson-fields" *ngIf="showLessonsTable">
-        <tr>
-          <td>
-            <mat-form-field class="full-width">
-              <mat-label>Título da Aula:</mat-label>
-              <input matInput formControlName="name" aria-label="none" />
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field class="full-width">
-              <mat-label>URL:</mat-label>
-              <input matInput formControlName="name" aria-label="none" />
-            </mat-form-field>
-          </td>
-        </tr>
-      </table>
-
-    </mat-toolbar>
-
   </div>
 </mat-card>
