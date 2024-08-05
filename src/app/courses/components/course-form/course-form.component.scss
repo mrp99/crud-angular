@@ -98,7 +98,10 @@ mat-hint {
   color: #fff;
 }
 
-
+.toolbarLesson {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
 
 .mat-hint {
   margin-top: -5px;
@@ -123,4 +126,9 @@ td {
 
 .prefix {
   padding-right: 10px;
+}
+
+.lessonFormError {
+  text-align: left;
+  padding-top: -30px;
 }

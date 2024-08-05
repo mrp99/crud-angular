@@ -9,8 +9,10 @@
     <form [formGroup]="form" class="min-width">
       <mat-form-field class="full-width">
         <input matInput formControlName="name" placeholder="Nome do Curso:" #name>
-        <mat-hint class="hintStyle">{{name?.value?.length || 0}}/20</mat-hint>
-        <mat-error *ngIf="form.get('name')?.invalid">{{getErrorMessage("name")}}</mat-error>
+        <mat-hint class="hintStyle">{{name.value.length || 0}}/30</mat-hint>
+        <mat-error *ngIf="form.get('name')?.invalid">
+          {{formUtils.getErrorMessage(form, 'name')}}
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field class="full-width">
@@ -21,22 +23,30 @@
             {{category}}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="form.get('category')?.invalid">{{getErrorMessage("category")}}</mat-error>
+        <mat-error *ngIf="form.get('category')?.invalid">
+          {{formUtils.getErrorMessage(form, 'category')}}
+        </mat-error>
       </mat-form-field>
 
       <mat-toolbar class="toolbarLesson">
         <button color="accent" class="btn" mat-raised-button (click)="addNewLesson()">
           Aulas
         </button>
-
       </mat-toolbar>
+
+      <mat-error class="lessonFormError" *ngIf="formUtils.isFormArrayRequired(form, 'lessons')">
+        {{attention}}
+      </mat-error>
+
       <table class="lesson-fields" formArrayName="lessons">
         <tr *ngFor="let lesson of getLessonsFormArray(); let i = index" [formGroupName]="i">
           <td>
             <mat-form-field class="full-width-lesson">
               <mat-label>Título da Aula:</mat-label>
               <input matInput formControlName="name" #chars maxlength="30" aria-label="none">
-              <mat-hint align="start">Descrição aula:</mat-hint>
+              <mat-error *ngIf="getLessonsFormArray()[i].get('name')?.invalid">
+                {{formUtils.getFormArrayFieldErrorMessage(form, 'lessons', 'name', i)}}
+              </mat-error>
               <mat-hint align="end">{{chars.value.length}} / 30</mat-hint>
             </mat-form-field>
           </td>
@@ -45,7 +55,9 @@
               <mat-label>URL:</mat-label>
               <span matPrefix class="prefix">{{prefix}}</span>
               <input matInput formControlName="url" aria-label="none" />
-              <mat-hint align="start">URL aula:</mat-hint>
+              <mat-error *ngIf="getLessonsFormArray()[i].get('url')?.invalid">
+                {{formUtils.getFormArrayFieldErrorMessage(form, 'lessons', 'url', i)}}
+              </mat-error>
             </mat-form-field>
           </td>
           <td>
