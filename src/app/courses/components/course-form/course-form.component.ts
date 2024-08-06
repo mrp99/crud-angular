@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, UntypedFormArray, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -7,7 +7,6 @@ import { CoursesService } from '../../shared/services/courses.service';
 import { Course } from '../../shared/interface/course';
 import { Lesson } from '../../shared/interface/lesson';
 import { FormUtilsService } from '../../shared/services/form-utils.service';
-import { validateYouTubeUrl } from '../../shared/validators/youtube-url.validator';
 
 @Component({
   selector: 'app-course-form',
@@ -78,8 +77,6 @@ export class CourseFormComponent implements OnInit {
       Validators.required,
       Validators.minLength(10),
       Validators.maxLength(11)
-    ], [
-      validateYouTubeUrl(this.prefix)
     ]);
 
     return this.formBuilder.group({
@@ -89,7 +86,7 @@ export class CourseFormComponent implements OnInit {
         Validators.minLength(5),
         Validators.maxLength(30)
       ]],
-      url: urlControl // Use the FormControl with async validator
+      url: urlControl
     });
   }
 
