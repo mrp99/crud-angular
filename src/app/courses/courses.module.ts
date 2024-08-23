@@ -12,17 +12,15 @@ import { CoursesListComponent } from './components/courses-list/courses-list.com
 
 
 @NgModule({
-  declarations: [
-    CoursesComponent,
-    CourseFormComponent,
-    CoursesListComponent,
-  ],
-  imports: [
-    AppMaterialModule,
-    CommonModule,
-    CoursesRoutingModule,
-    SharedModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        AppMaterialModule,
+        CommonModule,
+        CoursesRoutingModule,
+        SharedModule,
+        ReactiveFormsModule,
+        CoursesComponent,
+        CourseFormComponent,
+        CoursesListComponent
+    ]
 })
 export class CoursesModule { }
