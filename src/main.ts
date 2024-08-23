@@ -8,17 +8,19 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { withInterceptorsFromDi, provideHttpClient } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
-import { AppRoutingModule } from './app/app-routing.module';
+import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
+import { APP_ROUTES } from './app/app.routes';
 
 if (environment.production) {
   enableProdMode();
 }
 
 bootstrapApplication(AppComponent, {
-    providers: [
-        importProvidersFrom(AppRoutingModule, BrowserModule, MatToolbarModule),
-        provideAnimations(),
-        provideHttpClient(withInterceptorsFromDi())
-    ]
+  providers: [
+    importProvidersFrom(BrowserModule, MatToolbarModule),
+    provideAnimations(),
+    provideHttpClient(withInterceptorsFromDi()),
+    provideRouter(APP_ROUTES, withPreloading(PreloadAllModules))
+  ]
 })
   .catch(err => console.error(err));
