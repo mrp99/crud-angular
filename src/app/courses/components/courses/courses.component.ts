@@ -10,7 +10,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 import { CoursePage } from '../../shared/interface/course-page';
 import { CoursesListComponent } from '../courses-list/courses-list.component';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatCard } from '@angular/material/card';
 
@@ -19,7 +19,7 @@ import { MatCard } from '@angular/material/card';
     templateUrl: './courses.component.html',
     styleUrls: ['./courses.component.scss'],
     standalone: true,
-    imports: [MatCard, MatToolbar, NgIf, MatProgressSpinner, CoursesListComponent, AsyncPipe]
+    imports: [MatCard, MatToolbar, MatProgressSpinner, CoursesListComponent, AsyncPipe]
 })
 export class CoursesComponent implements OnInit {
 

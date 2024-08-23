@@ -5,28 +5,27 @@
     </mat-toolbar>
 
     <!-- Mostra o spinner enquanto os dados estão sendo carregados -->
-    <ng-container *ngIf="loadingSpinner">
+    @if (loadingSpinner) {
       <div class="loading-spinner">
         <mat-spinner></mat-spinner>
         <p>CARREGANDO...</p>
       </div>
-    </ng-container>
+    }
 
     <!-- Mostra a lista de cursos se não estiver carregando e houver dados -->
-    <ng-container *ngIf="!(loadingSpinner)">
-      <ng-container *ngIf="courses$ | async as coursePage">
-
+    @if (!(loadingSpinner)) {
+      @if (courses$ | async; as coursePage) {
         <!-- Mostra o componente de lista de cursos com dados -->
-        <app-courses-list *ngIf="coursePage.courses.length > 0" [courses]="coursePage.courses" (addEvent)="onAdd()"
-          (editEvent)="onEdit($event)" (remove)="onRemove($event)">
-        </app-courses-list>
-
+        @if (coursePage.courses.length > 0) {
+          <app-courses-list [courses]="coursePage.courses" (addEvent)="onAdd()"
+            (editEvent)="onEdit($event)" (remove)="onRemove($event)">
+          </app-courses-list>
+        }
         <!-- Mensagem quando não há cursos -->
-        <ng-container *ngIf="coursePage.courses.length === 0">
+        @if (coursePage.courses.length === 0) {
           <p>Nenhum curso disponível.</p>
-        </ng-container>
-      </ng-container>
-
-    </ng-container>
+        }
+      }
+    }
   </div>
 </mat-card>
