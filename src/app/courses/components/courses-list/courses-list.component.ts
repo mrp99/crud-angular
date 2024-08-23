@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Course } from '../../shared/interface/course';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({
@@ -9,17 +11,28 @@ import { Course } from '../../shared/interface/course';
 })
 export class CoursesListComponent implements OnInit {
 
-  @Input() courses: Course[] = [];
+  @Input() set courses(data: Course[]) {
+    this.dataSource.data = data;
+  }
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   @Output() addEvent = new EventEmitter<void>();
   @Output() editEvent = new EventEmitter<Course>();
   @Output() remove = new EventEmitter<Course>();
 
-
+  dataSource = new MatTableDataSource<Course>();
   displayedColumns: string[] = ['name', 'category', 'actions'];
 
   constructor() { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
 
   public onAdd(): void {
     this.addEvent.emit();
@@ -32,5 +45,6 @@ export class CoursesListComponent implements OnInit {
   public onRemove(courseRemove: Course): void {
     this.remove.emit(courseRemove);
   }
+
 
 }

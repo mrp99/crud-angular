@@ -1,12 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { CoursesService } from '../../shared/services/courses.service';
 import { MatDialog } from '@angular/material/dialog';
-import { catchError, map, of, take } from 'rxjs';
+import { catchError, map, Observable, of, take, tap } from 'rxjs';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 import { Course } from '../../shared/interface/course';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { CoursePage } from '../../shared/interface/course-page';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+
 
 @Component({
   selector: 'app-courses',
@@ -15,10 +19,12 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 })
 export class CoursesComponent implements OnInit {
 
-  courses: Course[] = [];
+
+  courses$: Observable<CoursePage> | null = null;
   loadingSpinner: boolean = true;
   dadosCarregados: boolean = false;
 
+  displayedColumns: string[] = ['name', 'actions'];
 
   constructor(
     private service: CoursesService,
@@ -33,6 +39,7 @@ export class CoursesComponent implements OnInit {
     this.getCourses()
   }
 
+
   public loading(): void {
     this.loadingSpinner = true;
     setTimeout(() => {
@@ -42,16 +49,13 @@ export class CoursesComponent implements OnInit {
   }
 
   private getCourses(): void {
-    this.service.listCourses().pipe(
-      map((response) => {
-        this.courses = response;
-        return this.courses;
-      }),
+    this.courses$ = this.service.listCourses().pipe(
+      map((response: CoursePage) => response),
       catchError((error) => {
-        this.onError('ERROR AO CARREGAR OS DADOS!')
-        return of([error]);
+        this.onError('ERROR AO CARREGAR OS DADOS!');
+        return of({ courses: [], totalElements: 0, totalPages: 0 });
       })
-    ).subscribe();
+    );
   }
 
   private onError(errorMsg: string): void {
@@ -85,24 +89,18 @@ export class CoursesComponent implements OnInit {
     this.snackBar.open(message, action, config);
   }
 
-  private refresh() {
-    this.service.listCourses().pipe(
+  private refresh(): void {
+    this.courses$ = this.service.listCourses().pipe(
       take(1),
-      map((response) => {
-        this.courses = response;
-        console.log(response);
-        return this.courses;
-      }),
       catchError((error) => {
-        this.onError('ERROR AO CARREGAR OS DADOS PÓS DELEÇÃO!')
-        return of([error]);
+        this.onError('ERROR AO CARREGAR OS DADOS PÓS DELEÇÃO!');
+        return of({ courses: [], totalElements: 0, totalPages: 0 });
       })
-    ).subscribe();
+    );
   }
 
 
   public onRemove(course: Course): void {
-
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: 'Tem certeza que deseja remover esse curso?',
     });
@@ -119,13 +117,7 @@ export class CoursesComponent implements OnInit {
           });
       }
     });
-
   }
-
-
-
-
-
 
 }
 

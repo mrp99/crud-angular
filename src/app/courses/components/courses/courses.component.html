@@ -1,11 +1,10 @@
 <mat-card class="container mat-elevation-z8">
   <div class="mat-elevation-z8">
     <mat-toolbar color="primary" class="toolbarSpan">
-      <span class="title">
-        Cursos Disponíveis
-      </span>
+      <span class="title">Cursos Disponíveis</span>
     </mat-toolbar>
 
+    <!-- Mostra o spinner enquanto os dados estão sendo carregados -->
     <ng-container *ngIf="loadingSpinner">
       <div class="loading-spinner">
         <mat-spinner></mat-spinner>
@@ -13,9 +12,21 @@
       </div>
     </ng-container>
 
-    <app-courses-list *ngIf="loading" (addEvent)="onAdd()" (editEvent)="onEdit($event)" (remove)="onRemove($event)"
-      [courses]="courses">
-    </app-courses-list>
+    <!-- Mostra a lista de cursos se não estiver carregando e houver dados -->
+    <ng-container *ngIf="!(loadingSpinner)">
+      <ng-container *ngIf="courses$ | async as coursePage">
 
+        <!-- Mostra o componente de lista de cursos com dados -->
+        <app-courses-list *ngIf="coursePage.courses.length > 0" [courses]="coursePage.courses" (addEvent)="onAdd()"
+          (editEvent)="onEdit($event)" (remove)="onRemove($event)">
+        </app-courses-list>
+
+        <!-- Mensagem quando não há cursos -->
+        <ng-container *ngIf="coursePage.courses.length === 0">
+          <p>Nenhum curso disponível.</p>
+        </ng-container>
+      </ng-container>
+
+    </ng-container>
   </div>
 </mat-card>

@@ -3,6 +3,7 @@ import { Course } from '../interface/course';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, delay, take } from 'rxjs';
 import { HandleErrorService } from './handleError.service';
+import { CoursePage } from '../interface/course-page';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,11 @@ export class CoursesService {
 
   constructor(private http: HttpClient, private errorService: HandleErrorService) { }
 
-  public listCourses(): Observable<Course[]> {
-    return this.http.get<Course[]>(this.API)
+  public listCourses(): Observable<CoursePage> {
+    return this.http.get<CoursePage>(this.API)
       .pipe(
         take(1),
         delay(1000),
-        // map(item => { return item; }),
         catchError(errorList => this.errorService.handleErrorList(errorList))
       );
   }
