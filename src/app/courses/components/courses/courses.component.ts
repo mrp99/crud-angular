@@ -8,9 +8,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { CoursePage } from '../../shared/interface/course-page';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-
 
 @Component({
   selector: 'app-courses',
@@ -104,10 +101,12 @@ export class CoursesComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: 'Tem certeza que deseja remover esse curso?',
     });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("id ==", course._id);
 
-    dialogRef.afterClosed().subscribe((result: Boolean) => {
+
       if (result) {
-        this.service.removeCourse(course?._id).subscribe(
+        this.service.removeCourse(course._id).subscribe(
           {
             next: () => {
               this.refresh();
