@@ -24,10 +24,12 @@ export class CoursesService {
   }
 
   public loadById(id: string) {
+    if (!id) throw new Error('id is required');
     return this.http.get<Course>(`${this.API}/${id}`);
   }
 
   public save(data: Partial<Course>) {
+    if (!data) throw new Error('data is required');
     if (data._id) return this.updateCourse(data);
     return this.createCourse(data);
   }
@@ -41,7 +43,8 @@ export class CoursesService {
   }
 
   private updateCourse(data: Partial<Course>) {
-    return this.http.put<Course>(`${this.API}/${data._id}`, data).pipe(
+    const url = `${this.API}/${data._id}`;
+    return this.http.put<Course>(url, data).pipe(
       take(1),
       catchError(errorPut => this.errorService.handleErrorUpdate(errorPut))
     );

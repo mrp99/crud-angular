@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +16,9 @@ export class HandleErrorService {
     });
   }
 
-  public handleErrorCreate(creatError: any): Observable<never> {
-    console.error("Ocorreu um erro ao Salvar", creatError);
-    return new Observable<never>(createError => {
-      createError.error("Erro ao tentar salvar, tente mais tarde!");
-      createError.complete();
-    });
+  public handleErrorCreate(createError: any): Observable<never> {
+    console.error("Ocorreu um erro ao Salvar", createError);
+    return throwError(() => new Error("Erro ao tentar salvar, tente mais tarde!"));
   }
 
   public handleErrorUpdate(putError: any): Observable<never> {
