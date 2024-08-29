@@ -10,10 +10,7 @@ export class HandleErrorService {
 
   public handleErrorList(error: any): Observable<never> {
     console.error('Ocorreu um erro ao carregar o serviço da lista:', error);
-    return new Observable<never>(listError => {
-      listError.error('Ocorreu um erro no service, tente mais tarde!');
-      listError.complete();
-    });
+    return throwError(() => new Error('Ocorreu um erro no service, tente mais tarde!'));
   }
 
   public handleErrorCreate(createError: any): Observable<never> {
@@ -23,19 +20,12 @@ export class HandleErrorService {
 
   public handleErrorUpdate(putError: any): Observable<never> {
     console.error("Ocorreu um erro no update", putError);
-    return new Observable<never>(updateError => {
-      updateError.error("Erro no update, tente mais tarde!");
-      updateError.complete();
-    });
+    return throwError(() => new Error("Erro no update, tente mais tarde!"));
   }
 
   public handleErrorDelete(deleteError: any): Observable<never> {
-    console.error("Ocorreu um erro ao remover o curso!", deleteError);
-    return new Observable<never>(deleteError => {
-      deleteError.error("Erro ao remover o curso!, tente mais tarde!");
-      deleteError.complete();
-    });
+    console.error("Ocorreu um erro no delete", deleteError);
+    return throwError(() => new Error("Erro no delete, tente mais tarde!"));
   }
-
 
 }

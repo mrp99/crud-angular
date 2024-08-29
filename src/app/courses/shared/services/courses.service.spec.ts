@@ -7,7 +7,7 @@ import { mockCourses } from '../mocks/mockCoureses';
 import { of, throwError } from "rxjs";
 import { Course } from "../interface/course";
 
-fdescribe('CoursesService', () => {
+describe('CoursesService', () => {
   let service: CoursesService;
   let httpMock: HttpTestingController;
   let errorServiceSpy: jasmine.SpyObj<HandleErrorService>
