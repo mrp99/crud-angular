@@ -30,6 +30,7 @@ fdescribe('CoursesService', () => {
     service = TestBed.inject(CoursesService);
     httpMock = TestBed.inject(HttpTestingController);
     errorServiceSpy = TestBed.inject(HandleErrorService) as jasmine.SpyObj<HandleErrorService>;
+
   });
 
   afterEach(() => {
@@ -160,6 +161,81 @@ fdescribe('CoursesService', () => {
     http.error(new ErrorEvent('NetworkError', { message: errorMsg }));
   });
 
+  it('should send a PUT request to update a course and handle errors', () => {
+    const data: Partial<Course> = { _id: '1', name: 'Java' };
+    const updatedCourse: Course = {
+      _id: '1',
+      name: 'Java',
+      category: 'Back-End',
+      lessons: [
+        { id: '1', name: 'Introdução', url: '1234567890' }
+      ]
+    };
+
+    const url = `api/courses/${data._id}`;
+
+    //updateCourse é private
+    service['updateCourse'](data).subscribe(response => {
+      expect(response).toEqual(updatedCourse);
+    });
+
+    const http = httpMock.expectOne(url);
+    http.flush(updatedCourse);
+    expect(http.request.method).toBe('PUT');
+    expect(errorServiceSpy.handleErrorUpdate).not.toHaveBeenCalled();
+  });
+
+  it('should handle errors from the PUT request and call handleErrorUpdate', () => {
+    const data: Partial<Course> = { _id: '1', name: 'Java' };
+    const url = `api/courses/${data._id}`;
+    const errorMessage = 'Simulated HTTP error';
+
+
+    errorServiceSpy.handleErrorUpdate.and.returnValue(throwError(() => new Error(errorMessage)));
+
+    service['updateCourse'](data).subscribe({
+      next: () => fail('Expected an error, but got a successful response'),
+      error: (error) => {
+        expect(error.message).toBe(errorMessage);
+        expect(errorServiceSpy.handleErrorUpdate).toHaveBeenCalled();
+      }
+    });
+
+    const http = httpMock.expectOne(url);
+    http.error(new ErrorEvent('NetworkError', { message: errorMessage }));
+  });
+
+  it('should send a DELETE request to remove a course', () => {
+    const id = '1';
+    const url = `api/courses/${id}`;
+
+    service.removeCourse(id).subscribe(resp => {
+      expect(resp).toBeNull();
+    });
+
+    const http = httpMock.expectOne(url);
+    http.flush(null);
+    expect(http.request.method).toBe('DELETE');
+  });
+
+  it('should handle errors from the DELETE request', () => {
+    const id = '1';
+    const url = `api/courses/${id}`;
+    const errorMessage = 'Simulated HTTP error';
+
+    errorServiceSpy.handleErrorDelete.and.returnValue(throwError(() => new Error(errorMessage)));
+
+    service.removeCourse(id).subscribe({
+      next: () => fail('expected an error, not success!'),
+      error: (error) => {
+        expect(error.message).toBe(errorMessage);
+        expect(errorServiceSpy.handleErrorDelete).toHaveBeenCalled();
+      }
+    });
+    const http = httpMock.expectOne(url);
+    expect(http.request.method).toBe('DELETE');
+    http.error(new ErrorEvent('Network error', { message: errorMessage }));
+  });
 
 });
 
