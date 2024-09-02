@@ -18,7 +18,7 @@ describe('HandleErrorService', () => {
     consoleSpy.calls.reset();
   });
 
-  it('Should be created', () => {
+  it('Should be created HandleErrorService', () => {
     expect(service).toBeTruthy();
   });
 

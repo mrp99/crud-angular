@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CoursesService } from '../../shared/services/courses.service';
 import { MatDialog } from '@angular/material/dialog';
-import { catchError, map, Observable, of, take, tap } from 'rxjs';
+import { catchError, map, Observable, of, take } from 'rxjs';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 import { Course } from '../../shared/interface/course';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,11 +15,11 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { MatCard } from '@angular/material/card';
 
 @Component({
-    selector: 'app-courses',
-    templateUrl: './courses.component.html',
-    styleUrls: ['./courses.component.scss'],
-    standalone: true,
-    imports: [MatCard, MatToolbar, MatProgressSpinner, CoursesListComponent, AsyncPipe]
+  selector: 'app-courses',
+  templateUrl: './courses.component.html',
+  styleUrls: ['./courses.component.scss'],
+  standalone: true,
+  imports: [MatCard, MatToolbar, MatProgressSpinner, CoursesListComponent, AsyncPipe]
 })
 export class CoursesComponent implements OnInit {
 
