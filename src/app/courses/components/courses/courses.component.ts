@@ -5,7 +5,7 @@ import { catchError, map, Observable, of, take } from 'rxjs';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 import { Course } from '../../shared/interface/course';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { CoursePage } from '../../shared/interface/course-page';
 import { CoursesListComponent } from '../courses-list/courses-list.component';
@@ -43,7 +43,6 @@ export class CoursesComponent implements OnInit {
     this.getCourses()
   }
 
-
   public loading(): void {
     this.loadingSpinner = true;
     setTimeout(() => {
@@ -63,6 +62,7 @@ export class CoursesComponent implements OnInit {
   }
 
   private onError(errorMsg: string): void {
+    if (!errorMsg) return;
     this.dialog.open(ErrorDialogComponent, {
       data: errorMsg
     });
@@ -85,7 +85,7 @@ export class CoursesComponent implements OnInit {
   private removeMsgCourse(): void {
     const message: string = "Curso removido com sucesso!";
     const action: string = 'X';
-    const config: any = {
+    const config: MatSnackBarConfig = {
       duration: 1000,
       verticalPosition: 'top',
       horizontalPosition: 'center'
@@ -103,15 +103,11 @@ export class CoursesComponent implements OnInit {
     );
   }
 
-
   public onRemove(course: Course): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: 'Tem certeza que deseja remover esse curso?',
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log("id ==", course._id);
-
-
       if (result) {
         this.service.removeCourse(course._id).subscribe(
           {
@@ -119,7 +115,7 @@ export class CoursesComponent implements OnInit {
               this.refresh();
               this.removeMsgCourse();
             },
-            error: (error) => console.error(error),
+            error: () => this.onError('Error trying to remove the course.')
           });
       }
     });

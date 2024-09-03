@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { HandleErrorService } from "./handleError.service";
 import { TestBed } from "@angular/core/testing";
 import { mockCoursesPage } from '../mocks/mockCoursesPage';
-import { mockCourses } from '../mocks/mockCoureses';
+import { mockCourses } from '../mocks/mockCourses';
 import { of, throwError } from "rxjs";
 import { Course } from "../interface/course";
 
