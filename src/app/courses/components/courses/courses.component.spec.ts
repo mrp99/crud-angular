@@ -1,6 +1,6 @@
 import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
 import { CoursesComponent } from "./courses.component";
-import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { MatDialog, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarModule } from "@angular/material/snack-bar";
 import { CoursesService } from "../../shared/services/courses.service";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -9,11 +9,9 @@ import { of, throwError } from "rxjs";
 import { mockCoursesPage } from "../../shared/mocks/mockCoursesPage";
 import { ErrorDialogComponent } from "../error-dialog/error-dialog.component";
 import { mockCourses } from "../../shared/mocks/mockCourses";
-import { HarnessLoader } from '@angular/cdk/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MatDialogHarness } from '@angular/material/dialog/testing';
 
-fdescribe('CoursesComponent', () => {
+
+describe('CoursesComponent', () => {
   let component: CoursesComponent;
   let fixture: ComponentFixture<CoursesComponent>;
   let coursesServiceSpy: jasmine.SpyObj<CoursesService>;
@@ -21,7 +19,6 @@ fdescribe('CoursesComponent', () => {
   let snackBarSpy: jasmine.SpyObj<MatSnackBar>;
   let routerSpy: jasmine.SpyObj<Router>;
   let activatedRouteSpy: jasmine.SpyObj<ActivatedRoute>;
-  let loader: HarnessLoader;
 
   beforeEach(async () => {
     coursesServiceSpy = jasmine.createSpyObj('CoursesService', ['listCourses', 'removeCourse']);
@@ -53,7 +50,6 @@ fdescribe('CoursesComponent', () => {
     fixture.detectChanges();
     spyOn(component, 'loading').and.callThrough();
     spyOn<any>(component, 'getCourses').and.callThrough();
-    loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
   });
 
   it('should create CoursesComponent', () => {
@@ -189,37 +185,37 @@ fdescribe('CoursesComponent', () => {
     expect(coursesServiceSpy.listCourses).toHaveBeenCalled();
   });
 
-  it('should not remove course if dialog is cancelled', () => {
-    const dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['afterClosed']);
-    dialogSpy.open.and.returnValue(dialogRefSpy);
-    dialogRefSpy.afterClosed.and.returnValue(of(false));
-
+  it('should open the confirmation dialog when onRemove is called', () => {
+    dialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as MatDialogRef<any>);
     component.onRemove(mockCourses);
-    fixture.detectChanges();
-
     expect(dialogSpy.open).toHaveBeenCalledWith(ConfirmDialogComponent, {
       data: 'Tem certeza que deseja remover esse curso?',
     });
+  });
+
+  it('should call removeCourse and refresh if the user confirms', () => {
+    dialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as MatDialogRef<any>);
+    coursesServiceSpy.removeCourse.and.returnValue(of(true));
+    spyOn(component as any, 'refresh');
+    spyOn(component as any, 'removeMsgCourse');
+    component.onRemove(mockCourses);
+    expect(coursesServiceSpy.removeCourse).toHaveBeenCalledWith(mockCourses._id);
+    expect(component['refresh']).toHaveBeenCalled();
+    expect(component['removeMsgCourse']).toHaveBeenCalled();
+  });
+
+  it('should not call removeCourse if the user cancels', () => {
+    dialogSpy.open.and.returnValue({ afterClosed: () => of(false) } as MatDialogRef<any>);
+    component.onRemove(mockCourses);
     expect(coursesServiceSpy.removeCourse).not.toHaveBeenCalled();
   });
 
-  fit('should open ConfirmationDialogComponent onRemove', async () => {
-    const mockCourse = mockCoursesPage.courses[0];
-    const dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['afterClosed']);
-    dialogSpy.open.and.returnValue(dialogRefSpy);
-    dialogRefSpy.afterClosed.and.returnValue(of(true));
-
-    spyOn(component as any, 'refresh');
-    spyOn(component as any, 'removeMsgCourse');
-    spyOn(component as any, 'onError');
-
-    component.onRemove(mockCourse);
-    fixture.detectChanges();
-
-    expect(dialogRefSpy.afterClosed).toHaveBeenCalled();
-    expect(component['refresh']).toHaveBeenCalled();
-    expect(component['removeMsgCourse']).toHaveBeenCalled();
-    expect(component['onError']).not.toHaveBeenCalled();
+  it('should call onError if the removal fails', () => {
+    dialogSpy.open.and.returnValue({ afterClosed: () => of(true) } as MatDialogRef<any>);
+    coursesServiceSpy.removeCourse.and.returnValue(throwError(() => new Error('Error')));
+    spyOn<any>(component, 'onError');
+    component.onRemove(mockCourses);
+    expect(component['onError']).toHaveBeenCalledWith('Error trying to remove the course.');
   });
 
 });

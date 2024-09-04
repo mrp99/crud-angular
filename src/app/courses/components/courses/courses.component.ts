@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CoursesService } from '../../shared/services/courses.service';
 import { MatDialog } from '@angular/material/dialog';
-import { catchError, map, Observable, of, take } from 'rxjs';
+import { catchError, map, Observable, of, switchMap, take } from 'rxjs';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 import { Course } from '../../shared/interface/course';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -104,19 +104,18 @@ export class CoursesComponent implements OnInit {
   }
 
   public onRemove(course: Course): void {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    this.dialog.open(ConfirmDialogComponent, {
       data: 'Tem certeza que deseja remover esse curso?',
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.service.removeCourse(course._id).subscribe(
-          {
-            next: () => {
-              this.refresh();
-              this.removeMsgCourse();
-            },
-            error: () => this.onError('Error trying to remove the course.')
-          });
+    }).afterClosed().pipe(
+      switchMap(result => result ? this.service.removeCourse(course._id) : of(null)),
+      catchError(() => {
+        this.onError('Error trying to remove the course.');
+        return of(null);
+      })
+    ).subscribe(response => {
+      if (response) {
+        this.refresh();
+        this.removeMsgCourse();
       }
     });
   }
