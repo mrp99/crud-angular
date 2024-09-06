@@ -1,8 +1,12 @@
-import { ActivatedRouteSnapshot } from "@angular/router";
+import { convertToParamMap } from "@angular/router";
+import { mockCourses } from "./mockCourses";
 
-class MockActivatedRouteSnapshot extends ActivatedRouteSnapshot {
-  constructor(params: { [key: string]: any }) {
-    super();
-    this.params = params;
-  }
+export class MockActivatedRoute {
+  snapshot = {
+    paramMap: convertToParamMap({}),
+    queryParamMap: convertToParamMap({}),
+    data: {
+      course: mockCourses
+    }
+  };
 }

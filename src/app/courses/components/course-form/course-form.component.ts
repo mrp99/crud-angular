@@ -17,11 +17,11 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { MatCard, MatCardHeader, MatCardContent, MatCardActions } from '@angular/material/card';
 
 @Component({
-    selector: 'app-course-form',
-    templateUrl: './course-form.component.html',
-    styleUrls: ['./course-form.component.scss'],
-    standalone: true,
-    imports: [MatCard, MatCardHeader, MatToolbar, MatCardContent, ReactiveFormsModule, MatFormField, MatInput, MatHint, MatError, MatLabel, MatSelect, MatOption, MatButton, MatPrefix, MatIconButton, MatIcon, MatCardActions]
+  selector: 'app-course-form',
+  templateUrl: './course-form.component.html',
+  styleUrls: ['./course-form.component.scss'],
+  standalone: true,
+  imports: [MatCard, MatCardHeader, MatToolbar, MatCardContent, ReactiveFormsModule, MatFormField, MatInput, MatHint, MatError, MatLabel, MatSelect, MatOption, MatButton, MatPrefix, MatIconButton, MatIcon, MatCardActions]
 })
 export class CourseFormComponent implements OnInit {
 
@@ -66,6 +66,7 @@ export class CourseFormComponent implements OnInit {
   }
 
   public removeLesson(index: number): void {
+    if (index < 0) return;
     const removeLessons = this.form.get('lessons') as FormArray;
     removeLessons.removeAt(index);
   }
